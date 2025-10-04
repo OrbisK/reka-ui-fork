@@ -12,15 +12,12 @@ import {
   hasTime,
   isBefore,
   isBeforeOrSame,
-
 } from '@/date'
 import { createContext, useDateFormatter, useDirection, useKbd, useLocale } from '@/shared'
 import {
   createContent,
-
   getDefaultDate,
   getSegmentElements,
-
   initializeSegmentValues,
   isSegmentNavigationKey,
   normalizeDateStep,
@@ -114,6 +111,16 @@ const props = withDefaults(defineProps<DateRangeFieldRootProps>(), {
   isDateUnavailable: undefined,
 })
 const emits = defineEmits<DateRangeFieldRootEmits>()
+defineSlots<{
+  default?: (props: {
+    /** The current time of the field */
+    modelValue: DateRange | null
+    /** The time field segment contents */
+    segments: { start: { part: SegmentPart, value: string }[], end: { part: SegmentPart, value: string }[] }
+    /** Value if the input is invalid */
+    isInvalid: boolean
+  }) => any
+}>()
 const { disabled, readonly, isDateUnavailable: propsIsDateUnavailable, dir: propDir, locale: propLocale } = toRefs(props)
 const locale = useLocale(propLocale)
 const dir = useDirection(propDir)
@@ -383,6 +390,7 @@ defineExpose({
     <slot
       :model-value="modelValue"
       :segments="segmentContents"
+      :is-invalid="isInvalid"
     />
 
     <VisuallyHidden
