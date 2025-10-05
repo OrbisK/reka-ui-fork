@@ -63,6 +63,7 @@ export * from './Switch'
 export * from './Tabs'
 export * from './TagsInput'
 export * from './TimeField'
+export * from './TimeRangeField'
 
 export * from './Toast'
 export * from './Toggle'
